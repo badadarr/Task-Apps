@@ -10,6 +10,72 @@ import SwiftUI
 struct NewDataView: View {
     @ObservedObject var homeData : HomeViewModel
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        VStack {
+            
+            HStack {
+                Text("Add New Tasks")
+                    .font(.system(size: 65))
+                    .fontWeight(.heavy)
+                    .foregroundColor(.black)
+                
+                Spacer(minLength: 0)
+            }
+            .padding()
+            
+            TextEditor(text: $homeData.content)
+                .padding()
+            
+            Divider()
+                .padding(.horizontal)
+            
+            HStack {
+                
+                Text("Kapan")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+                
+                Spacer(minLength: 0)
+            }
+            .padding()
+            
+            HStack(spacing: 10) {
+                
+                DateButton(title: "Hari Ini", homeData: homeData)
+                DateButton(title: "Besok", homeData: homeData)
+                
+                // Date Picker...
+                
+                DatePicker("", selection: $homeData.date, displayedComponents: .date)
+                    .labelsHidden()
+            }
+            .padding()
+            
+            // Add Button...
+            
+            Button(action: {}, label: {
+                
+                Label(
+                    title: { Text("Tambah Sekarang")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                    },
+                    icon: { Image(systemName: "plus")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                    })
+                    .padding(.vertical)
+                    .frame(width: UIScreen.main.bounds.width - 30)
+                    .background(
+                        
+                        LinearGradient(gradient: .init(colors: [Color("Color"), Color("Color1")]), startPoint: .leading, endPoint: .trailing)
+                    )
+                    .cornerRadius(8)
+                })
+            .padding()
+            }
+        .background(Color.black.opacity(0.06).ignoresSafeArea(.all, edges: .bottom))
     }
 }

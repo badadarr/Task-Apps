@@ -11,12 +11,12 @@ struct Home: View {
     @StateObject var homeData = HomeViewModel()
     var body: some View {
         
-        Button(action: {}, label: {
+        Button(action: {homeData.isNewData.toggle()}, label: {
             Text("Button")
         })
         .sheet(isPresented: $homeData.isNewData, content: {
             
-            
+            NewDataView(homeData: homeData)
         })
     }
 }
