@@ -14,4 +14,35 @@ class HomeViewModel : ObservableObject {
     
     // For NewData Sheet...
     @Published var isNewData = false
+    
+    // Checking & Updating Date....
+    
+    let calender = Calendar.current
+    
+    func checkDate() -> String {
+        
+        if calender.isDateInToday(date) {
+            
+             return "Hari Ini"
+        }
+        else if calender.isDateInTomorrow(date) {
+            
+            return "Besok"
+        }
+        else {
+            return "Other day"
+        }
+    }
+    
+    func updateDate(value : String) {
+        
+        if value == "Hari Ini" {date = Date()}
+        else if value == "Besok" {
+            date = calender.date(byAdding: .day, value: 1, to: Date())!
+        }
+        else {
+            // Lakukan Sesuatu...
+            
+        }
+    }
 }
