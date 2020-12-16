@@ -17,7 +17,8 @@ class HomeViewModel : ObservableObject {
     @Published var isNewData = false
     
     // Checking & Updating Date....
-    
+    // Storing update...
+    @Published var updateItem : Task!
     let calender = Calendar.current
     
     func checkDate() -> String {
@@ -63,5 +64,14 @@ class HomeViewModel : ObservableObject {
         catch {
             print(error.localizedDescription)
         }
+    }
+    
+    func EditItem(item : Task) {
+        
+        updateItem = item
+        // togging the newData...
+        date = item.date!
+        content = item.content!
+        isNewData.toggle()
     }
 }
