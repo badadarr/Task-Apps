@@ -50,6 +50,23 @@ class HomeViewModel : ObservableObject {
     
     func writeData(context : NSManagedObjectContext) {
         
+        // Updating Item...
+        
+        if updateItem != nil {
+            
+            // Means Update Old Data...
+            updateItem.date = date
+            updateItem.content = content
+            try! context.save()
+            
+            // removing updating if successfull...
+            updateItem = nil
+            content = ""
+            date = Date()
+            isNewData.toggle()
+             return
+        }
+        
         let newTask = Task(context: context)
         newTask.date = date
         newTask.content = content
@@ -60,6 +77,8 @@ class HomeViewModel : ObservableObject {
             try context.save()
             // success means closing view...
             isNewData.toggle()
+            content = ""
+            date = Date()
         }
         catch {
             print(error.localizedDescription)

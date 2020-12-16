@@ -35,45 +35,61 @@ struct Home: View {
                 .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
                 .background(Color.white)
                 
-                ScrollView(.vertical, showsIndicators: false, content: {
-                    LazyVStack(alignment: .leading, spacing: 20) {
-                        ForEach(results) { task in
-                            
-                            VStack(alignment: .leading, spacing: 5, content: {
+                // Empty View...
+                
+                if results.isEmpty {
+                    
+                    Spacer()
+                    
+                    Text("No Tasks!!!")
+                        .font(.title)
+                        .foregroundColor(.black)
+                        .fontWeight(.heavy)
+                     
+                    Spacer()
+                }
+                else {
+                    
+                    ScrollView(.vertical, showsIndicators: false, content: {
+                        LazyVStack(alignment: .leading, spacing: 20) {
+                            ForEach(results) { task in
                                 
-                                Text(task.content ?? "")
-                                    .foregroundColor(Color.white)
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                
-                                Text(task.date ?? Date(), style: .date)
-                                    .foregroundColor(Color.white)
-                                    .font(.subheadline)
-                                    .fontWeight(.regular)
-    
-                            })
-                            .foregroundColor(.black)
-                            .frame(width: 250, height: 90)
-                            .background(Color("Color"))
-                            .cornerRadius(10)
-                            
-                            .contextMenu {
-                                
-                                Button(action: {homeData.EditItem(item: task)}, label: {
-                                    Text("Edit")
+                                VStack(alignment: .leading, spacing: 5, content: {
+                                    
+                                    Text(task.content ?? "")
+                                        .foregroundColor(Color.white)
+                                        .font(.title)
+                                        .fontWeight(.bold)
+                                    
+                                    Text(task.date ?? Date(), style: .date)
+                                        .foregroundColor(Color.white)
+                                        .font(.subheadline)
+                                        .fontWeight(.regular)
+        
                                 })
+                                .foregroundColor(.black)
+                                .frame(width: 250, height: 90)
+                                .background(Color("Color"))
+                                .cornerRadius(10)
                                 
-                                Button(action: {
-                                    context.delete(task)
-                                    try! context.save()
-                                }, label: {
-                                    Text("Delete")
-                                })
+                                .contextMenu {
+                                    
+                                    Button(action: {homeData.EditItem(item: task)}, label: {
+                                        Text("Edit")
+                                    })
+                                    
+                                    Button(action: {
+                                        context.delete(task)
+                                        try! context.save()
+                                    }, label: {
+                                        Text("Delete")
+                                    })
+                                }
                             }
                         }
-                    }
-                    .padding()
-                })
+                        .padding()
+                    })
+                }
             }
             
             // Add Button...
