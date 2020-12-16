@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 class HomeViewModel : ObservableObject {
     
@@ -43,6 +44,24 @@ class HomeViewModel : ObservableObject {
         else {
             // Lakukan Sesuatu...
             
+        }
+    }
+    
+    func writeData(context : NSManagedObjectContext) {
+        
+        let newTask = Task(context: context)
+        newTask.date = date
+        newTask.content = content
+        
+        // Penyimpanan Data...
+        
+        do {
+            try context.save()
+            // success means closing view...
+            isNewData.toggle()
+        }
+        catch {
+            print(error.localizedDescription)
         }
     }
 }
